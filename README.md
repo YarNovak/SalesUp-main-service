@@ -33,7 +33,7 @@
 | **Messaging / Integration** | RabbitMQ, Kafka |
 | **Architecture & Design** | Clean Architecture, Domain-Driven Design, Event-Driven Systems |
 | **Tools & Environment** | Maven, Git, IntelliJ IDEA |
-| **Other** | REST API design, JSON configuration, JavaFX / Swing |
+| **Other** | REST API design, webhook, JSON configuration, JavaFX / Swing |
 
 ---
 
