@@ -36,7 +36,8 @@ public class CreatebotOrfather implements CallbackHandler {
 
 
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-        keyboard.add(List.of(button("🔘 1 click method", "CREATE_BOT_EASILY")));
+        keyboard.add(List.of(button("🔘 1 click method", "CREATE_BOT_EASILY"),
+                button("🔘 BotFather method", "CREATE_BOTFATHER")));
 
 
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup(keyboard);

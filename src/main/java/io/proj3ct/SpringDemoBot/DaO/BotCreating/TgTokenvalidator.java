@@ -28,6 +28,7 @@ public class TgTokenvalidator {
             try {
                 // 2. Виклик getMe
                 String urlString = "https://api.telegram.org/bot" + token + "/getMe";
+                // замінити deprecated URLConnection на HttpURLConnection
                 URL url = new URL(urlString);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");

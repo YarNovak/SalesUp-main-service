@@ -43,6 +43,10 @@ public class WebhookService {
         }
     }
 
+    public void registerTenantWebhook(String tenantBotToken) {
+        registerTenantWebhook(tenantBotToken, baseUrl);
+    }
+
     /**
      * Call this method when you add a new tenant (bot) to your system.
      *

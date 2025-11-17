@@ -11,6 +11,7 @@ import io.proj3ct.SpringDemoBot.HelpingServise.EditDelete_Messages.MessageRegist
 import io.proj3ct.SpringDemoBot.model.UserRepository;
 import io.proj3ct.SpringDemoBot.repository.BotRepository;
 import io.proj3ct.SpringDemoBot.repository.PlatformUserRepository;
+import io.proj3ct.SpringDemoBot.service.WebhookService;
 import lombok.Getter;
 import lombok.Setter;
 import org.checkerframework.checker.units.qual.A;
@@ -37,6 +38,9 @@ public class BotFatherLastShtrih implements MessageHandle {
 
     @Autowired
     private Wait_BotFather waitBotFather;
+
+    @Autowired
+    private WebhookService webhookService;
 
     @Autowired
     private TgTokenvalidator tgTokenvalidator;
@@ -86,13 +90,15 @@ public class BotFatherLastShtrih implements MessageHandle {
                 botik .create();
 
 
-
                // defaultValues.setDefault(botik);
-                System.out.println("QQQQQQQ");
+                System.out.println("Creating bot with token from user: " + userId);
                 botRepository.save(botik);
                // defaultValues.setDefault(botik);
-                System.out.println("QQQQQQQ");
+                System.out.println("Bot saved to repository with ID: " + botik.getId());
 
+                // Register webhook for the new bot
+                webhookService.registerTenantWebhook(botik.getBotToken());
+                System.out.println("Webhook registered for bot ID: " + botik.getId());
 
 
                 waitBotFather.clear(msg.getFrom().getId());
