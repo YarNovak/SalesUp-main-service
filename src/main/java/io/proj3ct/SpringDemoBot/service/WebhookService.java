@@ -6,8 +6,9 @@ import java.util.Optional;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.math3.analysis.function.Abs;
-import org.jvnet.hk2.annotations.Service;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.bots.DefaultAbsSender;
@@ -26,14 +27,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebhookService {
 
-    @Autowired
-    private final BotRepository botRepository;
-    @Autowired
-    private final BotMessageRepository botMessageRepository;
-
     @Value("app.baseUrl")
     String baseUrl = "https://your-app.com"; // Replace with your actual base URL
 
+    @Autowired
+    private final BotRepository botRepository;
 
     @PostConstruct
     public void init() {

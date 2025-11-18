@@ -41,8 +41,43 @@ public class BotCreating_commandHandler implements CommandHandler {
     }
 
     @Override
-    public void handle(Message message, TelegramLongPollingBot bot) {
+    public void handle(Message m, TelegramLongPollingBot bot) {
 
+
+        SendMessage message = new SendMessage();
+        message.setChatId(m.getChatId().toString());
+        message.setText("Вибери підходяий для себе метод");
+
+
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        keyboard.add(List.of(button("🔘 1 click method", "CREATE_BOT_EASILY"),
+                button("🔘 BotFather method", "CREATE_BOTFATHER")));
+
+
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup(keyboard);
+
+        message.setReplyMarkup(markup);
+
+        try{
+
+            Message msg =  bot.execute(message);
+            messageRegistry.addMessage(msg.getChatId(), msg.getMessageId());
+        }
+        catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private InlineKeyboardButton button(String text, String key) {
+
+        InlineKeyboardButton button = new InlineKeyboardButton();
+        button.setText(text);
+        button.setCallbackData(key);
+        return button;
+        }
+}
+/*
         Long telegramId = message.getFrom().getId();
         Optional<PlatformUser> userOpt = userRepository.findByTelegramId(telegramId);
         if(userOpt.isEmpty()) return;
@@ -137,3 +172,4 @@ public class BotCreating_commandHandler implements CommandHandler {
 
 
 }
+*/

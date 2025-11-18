@@ -75,7 +75,7 @@ public class Strange_back_tostart implements CallbackHandler {
 
             InlineKeyboardButton button = new InlineKeyboardButton();
             button.setText("\uD83D\uDE80 Создать бота");
-            button.setCallbackData("CREATE_BOT_EASILY");
+            button.setCallbackData("CREATE_BOT");
 
             rows.add(Collections.singletonList(button));
 
@@ -109,7 +109,7 @@ public class Strange_back_tostart implements CallbackHandler {
 
             InlineKeyboardButton button2 = new InlineKeyboardButton();
             button2.setText("\uD83D\uDE80 Создать бота");
-            button2.setCallbackData("CREATE_BOT_EASILY");
+            button2.setCallbackData("CREATE_BOT");
 
 
             rows.add(Collections.singletonList(button2));

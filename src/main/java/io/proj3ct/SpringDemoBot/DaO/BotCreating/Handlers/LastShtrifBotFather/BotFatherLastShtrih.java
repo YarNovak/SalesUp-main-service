@@ -71,6 +71,8 @@ public class BotFatherLastShtrih implements MessageHandle {
 
                 Long userId = msg.getFrom().getId();
 
+//                TODO: Issue with ID and connecting texts from def. values with bot_message and checking of prior existence of given token
+
                 Optional<PlatformUser> userOpt = userRepository.findByTelegramId(userId);
                 Bot botik = new Bot();
                 botik .setOwner(userOpt.get());
