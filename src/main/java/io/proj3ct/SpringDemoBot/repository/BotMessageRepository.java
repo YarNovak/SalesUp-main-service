@@ -10,5 +10,5 @@ public interface BotMessageRepository extends JpaRepository<BotMessage, Long> {
 
     boolean existsByMessageKeyAndBot_Id(final String messageKey, final Long botId);
     Optional<BotMessage> findByMessageKeyAndBot_Id(final String messageKey, final Long botId);
-
+    void deleteByMessageKeyAndBot_Id(final String messageKey, final Long botId);
 }

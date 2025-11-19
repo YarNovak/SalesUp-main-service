@@ -11,6 +11,7 @@ import io.proj3ct.SpringDemoBot.HelpingServise.EditDelete_Messages.MessageRegist
 import io.proj3ct.SpringDemoBot.model.UserRepository;
 import io.proj3ct.SpringDemoBot.repository.BotRepository;
 import io.proj3ct.SpringDemoBot.repository.PlatformUserRepository;
+import io.proj3ct.SpringDemoBot.service.BotService;
 import io.proj3ct.SpringDemoBot.service.WebhookService;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,18 +41,15 @@ public class BotFatherLastShtrih implements MessageHandle {
     private Wait_BotFather waitBotFather;
 
     @Autowired
-    private WebhookService webhookService;
-
-    @Autowired
     private TgTokenvalidator tgTokenvalidator;
-
-    @Autowired
-    private BotRepository botRepository;
 
     @Autowired
     private PlatformUserRepository userRepository;
     @Autowired
     private BotDefaultValues defaultValues;
+
+    @Autowired
+    private BotService botService;
 
     @Autowired
     private MessageRegistry messageRegistry;
@@ -71,41 +69,17 @@ public class BotFatherLastShtrih implements MessageHandle {
 
                 Long userId = msg.getFrom().getId();
 
-//                TODO: Issue with ID and connecting texts from def. values with bot_message and checking of prior existence of given token
+//                TODO: values with bot_message and checking of prior existence of given token
 
-                Optional<PlatformUser> userOpt = userRepository.findByTelegramId(userId);
-                Bot botik = new Bot();
-                botik .setOwner(userOpt.get());
-                botik .setSubscriptionStatus("free");
-                botik .setCurrentPrice(BigDecimal.ZERO);
-                botik .setRegistrationDate(LocalDateTime.now());
-                botik .setPaymentDue(LocalDateTime.now().plusDays(7));
-                botik.setActive(true);
-                botik.setBotToken(msg.getText());
-                botik.setBotusername(TgTokenvalidator.printBotInfo(msg.getText()).getUserName());
-                botik.setName(TgTokenvalidator.printBotInfo(msg.getText()).getFirstName());
-
-                botik.setCart(true);
-                botik.setNalichka(true);
-
-              //  defaultValues.setDefault(botik);
-                botik .create();
-
-
-               // defaultValues.setDefault(botik);
-                System.out.println("Creating bot with token from user: " + userId);
-                botRepository.save(botik);
-               // defaultValues.setDefault(botik);
-                System.out.println("Bot saved to repository with ID: " + botik.getId());
-
-                // Register webhook for the new bot
-                webhookService.registerTenantWebhook(botik.getBotToken());
-                System.out.println("Webhook registered for bot ID: " + botik.getId());
-
+                PlatformUser user = userRepository.findByTelegramId(userId)
+                        .orElseThrow(() -> new IllegalArgumentException(
+                            "User with the provided Telegram ID does not exist."));
+                
+                Bot botik = botService.createBotFreeTrial(user, msg.getText());
 
                 waitBotFather.clear(msg.getFrom().getId());
 
-                String botUsername = extractUsernameFromToken(botik.getBotToken());
+                String botUsername = botService.extractUsernameFromToken(botik.getBotToken());
                 String link = "https://t.me/" + botUsername;
 
                 String text =
@@ -147,14 +121,4 @@ public class BotFatherLastShtrih implements MessageHandle {
             }
 
     }
-    private String extractUsernameFromToken(String token) {
-
-        Bot need_bot = botRepository.findByBotToken(token).get();
-        return need_bot.getBotusername();
-    }
-
-
-
-
-
 }
