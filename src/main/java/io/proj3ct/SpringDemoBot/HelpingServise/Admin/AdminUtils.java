@@ -1,9 +1,10 @@
 package io.proj3ct.SpringDemoBot.HelpingServise.Admin;
 
-import io.proj3ct.SpringDemoBot.config.AdminConfig;
+import io.proj3ct.SpringDemoBot.Config.AdminConfig;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -16,13 +17,18 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 @Component
 public class AdminUtils {
 
-    @Autowired
     private static AdminConfig config;
+
+    @Autowired
+    public AdminUtils(AdminConfig config) {
+        AdminUtils.config = config;
+    }
 
     public static boolean isAdmin(Message msg){
         if(msg == null || msg.getFrom() == null || config == null) return false;
         try{
             List<Long> adminIds = config.getAdminIds();
+            System.out.println(adminIds);
             if(adminIds == null) return false;
             return adminIds.contains(msg.getFrom().getId());
         }

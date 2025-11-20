@@ -16,7 +16,6 @@
 	<properties>
 		<java.version>11</java.version>
 		<telegram.version>5.6.0</telegram.version>
-		<hypersistence-utils.version>3.12.0</hypersistence-utils.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -84,10 +83,11 @@
 			<version>42.7.5</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.github.f4b6a3/tsid-creator -->
 		<dependency>
-			<groupId>io.hypersistence</groupId>
-			<artifactId>hypersistence-utils-hibernate-63</artifactId>
-			<version>${hypersistence-utils.version}</version>
+			<groupId>com.github.f4b6a3</groupId>
+			<artifactId>tsid-creator</artifactId>
+			<version>5.2.6</version>
 		</dependency>
 
 

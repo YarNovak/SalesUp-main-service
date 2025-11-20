@@ -17,9 +17,11 @@ public interface AdminHandler extends MessageHandle{
 	default boolean support(Message msgcallbackData){
 		// If admin check passes - delegate to implementing class's supportAdmin
 		if(AdminUtils.isAdmin(msgcallbackData)){
+			System.out.println("OOO ADMIN!!!)))");
 			return supportAdmin(msgcallbackData);
 		}
 		// Not admin: do not support the message
+		System.out.println("Ty nie admin czertila, your id: " + msgcallbackData.getFrom().getId());
 		return false;
 	}
 

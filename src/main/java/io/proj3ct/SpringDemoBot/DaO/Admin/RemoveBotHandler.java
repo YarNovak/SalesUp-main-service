@@ -28,6 +28,8 @@ public class RemoveBotHandler implements AdminHandler {
         return msgcallbackData.getText().startsWith("/rmbot");
     }
 
+    // [Denys] YARIK! nie rabotaet prowerka na udalenie
+
     @Override
     public void handle(Message message, TelegramLongPollingBot bot) {
         String text = message.getText();

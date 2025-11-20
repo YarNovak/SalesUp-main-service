@@ -26,7 +26,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
   @Modifying
   @Transactional
-  @Query("DELETE FROM User u WHERE u.bot.id = :botId")
+  @Query("DELETE FROM users u WHERE u.bot.id = :botId")
   void deleteBulkByBotId(@Param("botId") Long botId);
 
     // Автоматична фільтрація по bot_id для всіх замовлень

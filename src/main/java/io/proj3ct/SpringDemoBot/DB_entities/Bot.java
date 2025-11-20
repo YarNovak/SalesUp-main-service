@@ -1,11 +1,10 @@
 package io.proj3ct.SpringDemoBot.DB_entities;
 
+import com.github.f4b6a3.tsid.TsidCreator;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-
-import io.hypersistence.utils.hibernate.id.Tsid;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,8 +19,14 @@ import java.util.Map;
 @Getter
 public class Bot {
     @Id
-    @Tsid
     private Long id;
+
+    @PrePersist
+    public void generateId() {
+        if (id == null) {
+            id = TsidCreator.getTsid().toLong();
+        }
+    }
 
     @ManyToOne
     @JoinColumn(name = "owner_id")

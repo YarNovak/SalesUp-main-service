@@ -38,7 +38,7 @@ public interface VapecomponyKatalogRepository extends CrudRepository<Vapecompony
 
   @Modifying
   @Transactional
-  @Query("DELETE FROM Vapecompony_katalog v WHERE v.bot.id = :botId")
+  @Query("DELETE FROM vapecompony_katalog v WHERE v.bot.id = :botId")
   void deleteBulkByBotId(@Param("botId") Long botId);
 
  //   @Query("SELECT o FROM vapecompony_katalog o WHERE o.bot.id = :botId")
