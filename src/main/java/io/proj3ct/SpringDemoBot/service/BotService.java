@@ -15,6 +15,7 @@ import io.proj3ct.SpringDemoBot.repository.BotMessageRepository;
 import io.proj3ct.SpringDemoBot.repository.BotRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,8 +83,48 @@ public class BotService {
         return Optional.of(botik);
     }
 
-    // [Denys] YARIK! method need to be checked
-    public void generateDefaultMessagesForBot(Bot bot) {
+    // Метод для загрузки партии "спящих" платформенных ботов (не от имени пользователя, без регистрации вебхука)
+    public OnboardResult onboardBots(List<String> tokens) {
+        List<Bot> created = new ArrayList<>();
+        List<String> existed = new ArrayList<>();
+        List<String> notValid = new ArrayList<>();
+
+        for (int i = 0; i < tokens.size(); i++) {
+            String token = tokens.get(i);
+            if (findBotByToken(token) != null) {
+                // already exists in DB
+                existed.add(token);
+                continue;
+            }
+            if (!TgTokenvalidator.isValidTelegramToken(token)) {
+                // token is not a valid Telegram token
+                notValid.add(token);
+                continue;
+            }
+            Bot botik = new Bot();
+            botik.setOwner(null); // платформенный бот, не привязан к пользователю
+            botik.setBotToken(token);
+            botik.setThirdPartyToken(false);
+            botik.setSubscriptionStatus(null);
+            botik.setCurrentPrice(BigDecimal.ZERO);
+            botik.setRegistrationDate(null);
+            botik.setPaymentDue(null);
+            botik.setActive(false); // "спящий" бот — не активен
+            var info = TgTokenvalidator.printBotInfo(token);
+            botik.setBotusername(info.getUserName());
+            botik.setName(info.getFirstName());
+            botik.create();
+            botRepository.save(botik);
+            // Генерируем дефолтные сообщения, чтобы бот был готов к активации позже
+            generateDefaultMessagesForBot(botik);
+            // Не регистрируем webhook для спящих ботов
+            created.add(botik);
+        }
+
+        return new OnboardResult(created, existed, notValid);
+    }
+
+    void generateDefaultMessagesForBot(Bot bot) {
         try {
             List<BotMessageTextsDef> defaultMessages = botDefTextRepository.findAll();
             for (BotMessageTextsDef defText : defaultMessages) {

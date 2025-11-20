@@ -7,6 +7,8 @@ import io.proj3ct.SpringDemoBot.model.*;
 import io.proj3ct.SpringDemoBot.repository.BotDefTextRepository;
 import io.proj3ct.SpringDemoBot.repository.BotMessageRepository;
 import io.proj3ct.SpringDemoBot.repository.BotRepository;
+import io.proj3ct.SpringDemoBot.service.WebhookService;
+
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,10 +40,15 @@ public class CleanTheBot {
     private BotMessageRepository botMessageRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private WebhookService webhookService;
 
     public void base_settingsForBot(Bot bot){
 
         System.out.println("JIJ");
+
+        webhookService.deleteTenantWebhook(bot.getBotToken());
+        
 
         finalItemRepository.deleteBulkByBotId(bot.getId());
         ordersRepository.deleteBulkByBotId(bot.getId());

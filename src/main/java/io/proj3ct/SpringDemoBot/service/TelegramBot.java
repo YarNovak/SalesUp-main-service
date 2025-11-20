@@ -3,6 +3,8 @@ package io.proj3ct.SpringDemoBot.service;
 
 import io.proj3ct.SpringDemoBot.DB_entities.Bot;
 import io.proj3ct.SpringDemoBot.DB_entities.PlatformUser;
+import io.proj3ct.SpringDemoBot.DaO.Admin.OnboardBotsHandler;
+import io.proj3ct.SpringDemoBot.DaO.Admin.RemoveBotHandler;
 import io.proj3ct.SpringDemoBot.DaO.BotCreating.Handlers.LastShtrifBotFather.BotFatherLastShtrih;
 import io.proj3ct.SpringDemoBot.DaO.ButtonEditing.RenameButtonMessageHandler;
 import io.proj3ct.SpringDemoBot.DaO.MenuManaging.Adding.AddVapecompony_LastShtrich;
@@ -104,6 +106,10 @@ public class TelegramBot extends TelegramLongPollingBot {
     private static final String DENY = "DENY";
     private static boolean work = true;
 
+    @Autowired
+    private OnboardBotsHandler onboardBotsHandler;
+    @Autowired
+    private RemoveBotHandler removeBotHandler;
     @Autowired
     private final CommandDispatcher commandDispatcher;
     @Autowired
@@ -258,6 +264,14 @@ public class TelegramBot extends TelegramLongPollingBot {
 
             else if(changeOpys_lastShtrih.support(update.getMessage())){
                 changeOpys_lastShtrih.handle(update.getMessage(), this);
+            }
+
+            else if(onboardBotsHandler.support(update.getMessage())){
+                onboardBotsHandler.handle(update.getMessage(), this);
+            }
+
+            else if(removeBotHandler.support(update.getMessage())){
+                removeBotHandler.handle(update.getMessage(), this);
             }
 
             else{
