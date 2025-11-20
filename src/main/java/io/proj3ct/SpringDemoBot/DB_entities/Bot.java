@@ -27,6 +27,9 @@ public class Bot {
     @JoinColumn(name = "owner_id")
     private PlatformUser owner;
 
+    @Column(name = "third_party_token", nullable = false)
+    private boolean thirdPartyToken = false;
+
     private String name;
     private String botusername;
 

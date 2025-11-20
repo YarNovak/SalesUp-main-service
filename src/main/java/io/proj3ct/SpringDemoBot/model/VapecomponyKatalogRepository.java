@@ -2,7 +2,11 @@ package io.proj3ct.SpringDemoBot.model;
 
 import io.proj3ct.SpringDemoBot.DB_entities.Bot;
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +34,12 @@ public interface VapecomponyKatalogRepository extends CrudRepository<Vapecompony
     Optional<Vapecompony_katalog> findByIdAndBot_Id(Long id, Long bot_id);
 
     public void deleteAllByBot(Bot bot);
+    public void deleteAllByBot_Id(Long botId);
+
+  @Modifying
+  @Transactional
+  @Query("DELETE FROM Vapecompony_katalog v WHERE v.bot.id = :botId")
+  void deleteBulkByBotId(@Param("botId") Long botId);
 
  //   @Query("SELECT o FROM vapecompony_katalog o WHERE o.bot.id = :botId")
   //  List<Vapecompony_katalog> findAllByBotId(@Param("botId") Long botId);

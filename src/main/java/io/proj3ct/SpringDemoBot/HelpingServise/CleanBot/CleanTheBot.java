@@ -42,6 +42,26 @@ public class CleanTheBot {
     public void base_settingsForBot(Bot bot){
 
         System.out.println("JIJ");
+
+        finalItemRepository.deleteBulkByBotId(bot.getId());
+        ordersRepository.deleteBulkByBotId(bot.getId());
+        cartItemRepository.deleteBulkByBotId(bot.getId());
+        vapecomponyKatalogRepository.deleteBulkByBotId(bot.getId());
+        vapecomponyRepository.deleteBulkByBotId(bot.getId());
+        userRepository.deleteBulkByBotId(bot.getId());
+
+        if (bot.isThirdPartyToken()) {
+            botMessageRepository.deleteBulkByBotId(bot.getId());
+            if (bot.getButtonTexts() != null) {
+                bot.getButtonTexts().clear();
+            }
+            botRepository.delete(bot);
+            System.out.println("Third-party Bot DELETED");
+            return;
+        }
+
+        System.out.println("JIJ");
+
         bot.create();
         bot.setOwner(null);
         bot.setPaymentDue(null);
@@ -51,41 +71,6 @@ public class CleanTheBot {
         bot.setNalichka(true);
 
         botRepository.save(bot);
-        System.out.println("JIJ");
-
-        List<FinalItem> fn = finalItemRepository.findAllByBot_Id(bot.getId());
-
-        for(FinalItem fi : fn){
-            finalItemRepository.delete(fi);
-        }
-
-        List<Orders> or = ordersRepository.findAllByBot_Id(bot.getId());
-        for(Orders o : or){
-            ordersRepository.delete(o);
-        }
-        List<CartItem> ct = cartItemRepository.findAllByBot_Id(bot.getId());
-        for (CartItem ci : ct) {
-            cartItemRepository.delete(ci);
-        }
-        List<Vapecompony_katalog> vpk = vapecomponyKatalogRepository.findAllByBot_Id(bot.getId());
-        for(Vapecompony_katalog vk : vpk){
-            vapecomponyKatalogRepository.delete(vk);
-        }
-        List<Vapecompony> vp = vapecomponyRepository.findAllByBot_Id(bot.getId());
-        for (Vapecompony v : vp) {
-            vapecomponyRepository.delete(v);
-        }
-        List<User> us = userRepository.findAllByBot_Id(bot.getId());
-        for (User v : us) {
-           userRepository.delete(v);
-        }
-
-
-        //  ordersRepository.findAll();
-        //    cartItemRepository.findAll();
-        //
-        //   vapecomponyKatalogRepository.findAll();
-        //   vapecomponyRepository.findAll();
 
        for(BotMessageTextsDef btf : botDefTextRepository.findAll()){
 

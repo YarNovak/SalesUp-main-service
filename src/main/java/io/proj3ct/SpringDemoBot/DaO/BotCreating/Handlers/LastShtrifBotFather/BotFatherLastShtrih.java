@@ -8,27 +8,18 @@ import io.proj3ct.SpringDemoBot.DaO.BotCreating.TgTokenvalidator;
 import io.proj3ct.SpringDemoBot.DaO.MessageHandle;
 
 import io.proj3ct.SpringDemoBot.HelpingServise.EditDelete_Messages.MessageRegistry;
-import io.proj3ct.SpringDemoBot.model.UserRepository;
-import io.proj3ct.SpringDemoBot.repository.BotRepository;
 import io.proj3ct.SpringDemoBot.repository.PlatformUserRepository;
 import io.proj3ct.SpringDemoBot.service.BotService;
-import io.proj3ct.SpringDemoBot.service.WebhookService;
-import lombok.Getter;
-import lombok.Setter;
-import org.checkerframework.checker.units.qual.A;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.GetMe;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,13 +32,8 @@ public class BotFatherLastShtrih implements MessageHandle {
     private Wait_BotFather waitBotFather;
 
     @Autowired
-    private TgTokenvalidator tgTokenvalidator;
-
-    @Autowired
     private PlatformUserRepository userRepository;
-    @Autowired
-    private BotDefaultValues defaultValues;
-
+    
     @Autowired
     private BotService botService;
 
@@ -69,14 +55,25 @@ public class BotFatherLastShtrih implements MessageHandle {
 
                 Long userId = msg.getFrom().getId();
 
-//                TODO: values with bot_message and checking of prior existence of given token
-
                 PlatformUser user = userRepository.findByTelegramId(userId)
                         .orElseThrow(() -> new IllegalArgumentException(
                             "User with the provided Telegram ID does not exist."));
                 
-                Bot botik = botService.createBotFreeTrial(user, msg.getText());
+                Optional<Bot> botikOptional = botService.createBotFreeTrial(user, msg.getText(), true);
+                // Если бот не был создан (токен уже используется)
+                if (botikOptional.isEmpty()) {
+                    message.setText("Ваш токен вже використовується іншим ботом, надішліть інший))");
+                    try{
+                        Message msgg =  bot.execute(message);
+                        messageRegistry.addMessage(msgg.getChatId(), msgg.getMessageId());
 
+                    }
+                    catch (TelegramApiException e){
+                        e.printStackTrace();
+                    }
+                    return;
+                }
+                Bot botik = botikOptional.get();
                 waitBotFather.clear(msg.getFrom().getId());
 
                 String botUsername = botService.extractUsernameFromToken(botik.getBotToken());

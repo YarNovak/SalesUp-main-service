@@ -16,6 +16,7 @@ import io.proj3ct.SpringDemoBot.repository.BotRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,27 +27,32 @@ public class BotService {
     private final BotDefTextRepository botDefTextRepository;
     private final WebhookService webhookService;
     
-    public Bot createBotFreeTrial(PlatformUser user, String token) {
-        return createBot(user, token, "free", 
+    public Optional<Bot> createBotFreeTrial(PlatformUser user, String token, boolean thirdPartyToken) {
+        return createBot(user, token, thirdPartyToken, "free", 
         BigDecimal.ZERO, 7, true, true, true);
     }
 
-    public Bot createBotFreeTrial(PlatformUser user, String token, int trialPeriodDays) {
-        return createBot(user, token, "free", 
+    public Optional<Bot> createBotFreeTrial(PlatformUser user, String token, boolean thirdPartyToken, int trialPeriodDays) {
+        return createBot(user, token, thirdPartyToken, "free", 
         BigDecimal.ZERO, trialPeriodDays, true, true, true);
     }
  
 
-    public Bot createBot(PlatformUser user, String token, 
+    public Optional<Bot> createBot(PlatformUser user, String token,
+                        boolean thirdPartyToken,
                         String subscriptionStatus, 
                         BigDecimal currentPrice, 
                         int trialPeriodDays,
                         boolean active,
                         boolean cart,
                         boolean nalichka) {
+        if (findBotByToken(token) != null) {
+            return Optional.empty();
+        }
         Bot botik = new Bot();
         botik.setOwner(user);
         botik.setBotToken(token);
+        botik.setThirdPartyToken(thirdPartyToken);
         botik.setSubscriptionStatus(subscriptionStatus);
         botik.setCurrentPrice(currentPrice);
         botik.setRegistrationDate(LocalDateTime.now());
@@ -73,7 +79,7 @@ public class BotService {
         webhookService.registerTenantWebhook(botik.getBotToken());
         System.out.println("[Webhook] registered for bot ID: " + botik.getId());
 
-        return botik;
+        return Optional.of(botik);
     }
 
     // [Denys] YARIK! method need to be checked

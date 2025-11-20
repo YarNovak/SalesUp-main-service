@@ -2,7 +2,11 @@ package io.proj3ct.SpringDemoBot.model;
 
 import io.proj3ct.SpringDemoBot.DB_entities.Bot;
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -25,6 +29,12 @@ public interface OrdersRepository extends CrudRepository<Orders, Long> {
     @EntityGraph(attributePaths = {"finalItems", "finalItems.bot", "user"})
     List<Orders> findAllByBot_BotToken(String botToken);
     public void deleteAllByBot(Bot bot);
+    public void deleteAllByBot_Id(Long botId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Orders o WHERE o.bot.id = :botId")
+    void deleteBulkByBotId(@Param("botId") Long botId);
 
     List<Orders> findAllByBot_Id(Long id);
 

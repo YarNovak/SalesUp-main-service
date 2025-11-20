@@ -1,9 +1,12 @@
 package io.proj3ct.SpringDemoBot.model;
 
 import io.proj3ct.SpringDemoBot.DB_entities.Bot;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,5 +23,10 @@ public interface FinalItemRepository extends CrudRepository<FinalItem, Long> {
 
 
     public void deleteAllByBot(Bot bot);
-
+    public void deleteAllByBot_Id(Long botId);
+    
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM FinalItem f WHERE f.bot.id = :botId")
+    void deleteBulkByBotId(@Param("botId") Long botId);
 }
