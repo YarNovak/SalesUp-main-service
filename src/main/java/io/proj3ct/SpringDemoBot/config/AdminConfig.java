@@ -1,5 +1,4 @@
-package io.proj3ct.SpringDemoBot.config;
-
+package io.proj3ct.SpringDemoBot.Config;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +9,7 @@ import lombok.Data;
 
 @Configuration
 @Data
-@PropertySource("application.properties")
+@PropertySource("classpath:application.properties")
 public class AdminConfig {
     
     @Value("#{'${bot.admins}'.split(',')}")
