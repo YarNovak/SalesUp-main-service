@@ -1,4 +1,4 @@
-package io.proj3ct.SpringDemoBot.config;
+package io.proj3ct.SpringDemoBot.Config;
 
 import io.proj3ct.SpringDemoBot.service.TelegramBot;
 import lombok.extern.slf4j.Slf4j;

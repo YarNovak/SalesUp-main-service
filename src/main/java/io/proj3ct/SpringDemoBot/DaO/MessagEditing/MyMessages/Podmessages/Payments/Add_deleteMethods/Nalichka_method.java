@@ -4,7 +4,7 @@ import io.proj3ct.SpringDemoBot.DB_entities.Bot;
 import io.proj3ct.SpringDemoBot.DaO.CallbackHandler;
 import io.proj3ct.SpringDemoBot.HelpingServise.EditDelete_Messages.MessageRegistry;
 import io.proj3ct.SpringDemoBot.HelpingServise.OwnerOrNo.OwnerCheking;
-import io.proj3ct.SpringDemoBot.config.BotConfig;
+import io.proj3ct.SpringDemoBot.Config.BotConfig;
 import io.proj3ct.SpringDemoBot.repository.BotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

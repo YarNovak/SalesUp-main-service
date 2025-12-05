@@ -3,7 +3,7 @@ package io.proj3ct.SpringDemoBot.service;
 import io.proj3ct.SpringDemoBot.Cash.Rabiit.CacheInvalidationSender;
 import io.proj3ct.SpringDemoBot.Cash.Rabiit.RabbitMQConfig;
 import io.proj3ct.SpringDemoBot.Cash.VapecomponyRepository_working_withBD.VapecomponyDTO;
-import io.proj3ct.SpringDemoBot.config.BotConfig;
+import io.proj3ct.SpringDemoBot.Config.BotConfig;
 import io.proj3ct.SpringDemoBot.model.Vapecompony;
 import io.proj3ct.SpringDemoBot.model.VapecomponyRepository;
 import io.proj3ct.SpringDemoBot.repository.BotRepository;

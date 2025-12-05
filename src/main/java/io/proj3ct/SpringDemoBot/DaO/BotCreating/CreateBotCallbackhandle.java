@@ -8,6 +8,9 @@ import io.proj3ct.SpringDemoBot.HelpingServise.EditDelete_Messages.MessageRegist
 import io.proj3ct.SpringDemoBot.repository.BotMessageRepository;
 import io.proj3ct.SpringDemoBot.repository.BotRepository;
 import io.proj3ct.SpringDemoBot.repository.PlatformUserRepository;
+import io.proj3ct.SpringDemoBot.service.BotService;
+import io.proj3ct.SpringDemoBot.service.WebhookService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -41,6 +44,11 @@ public class CreateBotCallbackhandle implements CallbackHandler {
 
     @Autowired
     private MessageRegistry messageRegistry;
+
+    @Autowired
+    private WebhookService webhookService;
+    @Autowired
+    private BotService botService;
 
 
     @Override
@@ -78,11 +86,15 @@ public class CreateBotCallbackhandle implements CallbackHandler {
         freeBot.setNalichka(true);
 
         freeBot.create();
+        botService.generateDefaultMessagesForBot(freeBot);
        // defaultValues.setDefault(freeBot);
+
 
 
         botRepository.save(freeBot);
 
+        // Register webhook for the new bot
+        webhookService.registerTenantWebhook(freeBot.getBotToken());
 
         String botUsername = extractUsernameFromToken(freeBot.getBotToken());
         String link = "https://t.me/" + botUsername;

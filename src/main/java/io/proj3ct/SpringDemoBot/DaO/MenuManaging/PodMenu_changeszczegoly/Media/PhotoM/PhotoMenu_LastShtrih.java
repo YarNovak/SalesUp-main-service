@@ -4,7 +4,7 @@ import io.proj3ct.SpringDemoBot.DB_entities.Bot;
 import io.proj3ct.SpringDemoBot.DaO.MenuManaging.HEPLING_SERVICES.Photos.MenuPhoto_handler;
 import io.proj3ct.SpringDemoBot.DaO.MessageHandle;
 import io.proj3ct.SpringDemoBot.HelpingServise.EditDelete_Messages.MessageRegistry;
-import io.proj3ct.SpringDemoBot.config.BotConfig;
+import io.proj3ct.SpringDemoBot.Config.BotConfig;
 import io.proj3ct.SpringDemoBot.model.Vapecompony;
 import io.proj3ct.SpringDemoBot.model.VapecomponyRepository;
 import io.proj3ct.SpringDemoBot.repository.BotRepository;

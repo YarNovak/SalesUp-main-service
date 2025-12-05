@@ -5,7 +5,7 @@ import io.proj3ct.SpringDemoBot.DaO.MessageHandle;
 import io.proj3ct.SpringDemoBot.DaO.Products_manipulation.LastShtrichs.HandlerForProducts.AddProductPhoto_hadnler;
 import io.proj3ct.SpringDemoBot.DaO.Products_manipulation.LastShtrichs.HandlerForProducts.AddProductVideo_handler;
 import io.proj3ct.SpringDemoBot.HelpingServise.EditDelete_Messages.MessageRegistry;
-import io.proj3ct.SpringDemoBot.config.BotConfig;
+import io.proj3ct.SpringDemoBot.Config.BotConfig;
 import io.proj3ct.SpringDemoBot.model.VapecomponyKatalogRepository;
 import io.proj3ct.SpringDemoBot.model.Vapecompony_katalog;
 import io.proj3ct.SpringDemoBot.repository.BotRepository;

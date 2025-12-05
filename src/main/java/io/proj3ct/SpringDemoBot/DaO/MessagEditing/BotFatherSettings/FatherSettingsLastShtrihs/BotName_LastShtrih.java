@@ -5,7 +5,7 @@ import io.proj3ct.SpringDemoBot.DaO.MessagEditing.BotFatherSettings.BotFatherHan
 import io.proj3ct.SpringDemoBot.DaO.MessageHandle;
 import io.proj3ct.SpringDemoBot.DaO.Products_manipulation.Change_Prod.NewLastShtrihs.ChangeOpys_handler;
 import io.proj3ct.SpringDemoBot.HelpingServise.EditDelete_Messages.MessageRegistry;
-import io.proj3ct.SpringDemoBot.config.BotConfig;
+import io.proj3ct.SpringDemoBot.Config.BotConfig;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

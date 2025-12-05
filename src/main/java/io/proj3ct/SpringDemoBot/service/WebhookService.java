@@ -27,14 +27,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebhookService {
 
-    @Value("app.baseUrl")
-    String baseUrl = "https://your-app.com"; // Replace with your actual base URL
+    @Value("${app.ngrok}")
+    private final String baseUrl = "https://unscaling-trembly-roseanna.ngrok-free.dev"; // Replace with your actual base URL
 
     @Autowired
-    private final BotRepository botRepository;
+    private BotRepository botRepository;
 
     @PostConstruct
     public void init() {
+        System.out.println("Init: Register Webhooks...");
         List<Bot> bots = botRepository.findAll();
         for (Bot bot : bots) {
             registerTenantWebhook(bot.getBotToken(), baseUrl);
@@ -42,6 +43,7 @@ public class WebhookService {
     }
 
     public void registerTenantWebhook(String tenantBotToken) {
+        System.out.println("baseUrl: " + baseUrl);
         registerTenantWebhook(tenantBotToken, baseUrl);
     }
 
@@ -53,7 +55,7 @@ public class WebhookService {
      */
     public void registerTenantWebhook(String tenantBotToken, String yourBaseUrl) {
         try {
-
+            System.out.println("Process: Registering webhook for tenant bot token: " + tenantBotToken);
             Bot bot = botRepository.findByBotToken(tenantBotToken).orElseThrow(() -> new IllegalArgumentException("Bot with the provided token does not exist."));
             Long botId = bot.getId();
             // 1. Create a new, temporary sender using the TENANT'S token
@@ -65,6 +67,7 @@ public class WebhookService {
             };
             // Create the unique webhook URL
             String webhookUrl = yourBaseUrl + "/webhook/" + botId;
+            System.out.println("Webhook string: " + webhookUrl);
 
             // Create the SetWebhook method
             SetWebhook setWebhook = SetWebhook.builder()

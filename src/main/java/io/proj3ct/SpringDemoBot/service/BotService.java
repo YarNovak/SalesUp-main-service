@@ -30,12 +30,12 @@ public class BotService {
     
     public Optional<Bot> createBotFreeTrial(PlatformUser user, String token, boolean thirdPartyToken) {
         return createBot(user, token, thirdPartyToken, "free", 
-        BigDecimal.ZERO, 7, true, true, true);
+        BigDecimal.ZERO, 7, false, true, true);
     }
 
     public Optional<Bot> createBotFreeTrial(PlatformUser user, String token, boolean thirdPartyToken, int trialPeriodDays) {
         return createBot(user, token, thirdPartyToken, "free", 
-        BigDecimal.ZERO, trialPeriodDays, true, true, true);
+        BigDecimal.ZERO, trialPeriodDays, false, true, true);
     }
  
 
@@ -124,7 +124,7 @@ public class BotService {
         return new OnboardResult(created, existed, notValid);
     }
 
-    void generateDefaultMessagesForBot(Bot bot) {
+    public void generateDefaultMessagesForBot(Bot bot) {
         try {
             List<BotMessageTextsDef> defaultMessages = botDefTextRepository.findAll();
             for (BotMessageTextsDef defText : defaultMessages) {

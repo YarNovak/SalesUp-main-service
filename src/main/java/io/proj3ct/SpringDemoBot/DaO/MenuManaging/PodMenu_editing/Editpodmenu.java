@@ -3,7 +3,7 @@ package io.proj3ct.SpringDemoBot.DaO.MenuManaging.PodMenu_editing;
 import io.proj3ct.SpringDemoBot.DaO.CallbackHandler;
 import io.proj3ct.SpringDemoBot.HelpingServise.EditDelete_Messages.MessageRegistry;
 import io.proj3ct.SpringDemoBot.HelpingServise.OwnerOrNo.OwnerCheking;
-import io.proj3ct.SpringDemoBot.config.BotConfig;
+import io.proj3ct.SpringDemoBot.Config.BotConfig;
 import io.proj3ct.SpringDemoBot.model.Vapecompony;
 import io.proj3ct.SpringDemoBot.model.VapecomponyKatalogRepository;
 import io.proj3ct.SpringDemoBot.model.VapecomponyRepository;

@@ -24,7 +24,7 @@ import io.proj3ct.SpringDemoBot.Dispetchers.CommandDispatcher;
 import io.proj3ct.SpringDemoBot.HelpingServise.CleanBot.CleanTheBot;
 import io.proj3ct.SpringDemoBot.HelpingServise.Clear_exept;
 import io.proj3ct.SpringDemoBot.HelpingServise.EditDelete_Messages.MessageRegistry;
-import io.proj3ct.SpringDemoBot.config.BotConfig;
+import io.proj3ct.SpringDemoBot.Config.BotConfig;
 import io.proj3ct.SpringDemoBot.model.*;
 import io.proj3ct.SpringDemoBot.repository.BotRepository;
 import io.proj3ct.SpringDemoBot.repository.PlatformUserRepository;
