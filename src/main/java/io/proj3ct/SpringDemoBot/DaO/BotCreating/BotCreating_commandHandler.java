@@ -46,12 +46,15 @@ public class BotCreating_commandHandler implements CommandHandler {
 
         SendMessage message = new SendMessage();
         message.setChatId(m.getChatId().toString());
-        message.setText("Вибери підходяий для себе метод");
+        message.setText("Как вы хотите создать бота?\n" + //
+                        "\n" + //
+                        "⚡Один клик — мы всё сделаем за вас.\n" + //
+                        "🔑свой токен — вставьте токен из @BotFather");
 
 
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-        keyboard.add(List.of(button("🔘 1 click method", "CREATE_BOT_EASILY"),
-                button("🔘 BotFather method", "CREATE_BOTFATHER")));
+        keyboard.add(List.of(button("⚡Один клик", "CREATE_BOT_EASILY"),
+                button("🔑 свой токен", "CREATE_BOTFATHER")));
 
 
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup(keyboard);

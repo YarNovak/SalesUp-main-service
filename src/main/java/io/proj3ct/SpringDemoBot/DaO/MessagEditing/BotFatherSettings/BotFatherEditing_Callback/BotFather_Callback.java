@@ -69,23 +69,44 @@ public class BotFather_Callback implements CallbackHandler {
                 "создайте свой уникальный стиль"+escapeMarkdown("\uD83E\uDD29")+"\n\n\n"+
                 escapeMarkdown("\uD83D\uDCF2")+" Настройте всё под себя"+escapeMarkdown(".");
 
-        newPhoto.setCaption(text);
-        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+      
 
-        keyboard.add(List.of(button("✏\uFE0F Редактировать имя", "BotF_Name:" + botId)));
-        keyboard.add(List.of(button("\uD83D\uDCC4 Краткое Описание", "BotF_About:" + botId)));
-        keyboard.add(List.of(button("\uD83D\uDCAC Стартовое сообщение", "BotF_Description:" + botId)));
-        keyboard.add(List.of(button("\uD83D\uDCF8 Стартовое фото", "BotF_Description_picture:" + botId)));
-        keyboard.add(List.of(button("\uD83D\uDC64 Аватарка", "BotF_Botpic:" + botId)));
-        keyboard.add(List.of(button("🔙 Назад", "GO_BACK_FROM_EDIT:"+ botId)));
+        String text2 =  escapeMarkdown("\uD83D\uDC64")+"_*Данные профиля*_"+"\n" +
+        "\n" + "> "+
+        "создайте свой уникальный стиль"+escapeMarkdown("\uD83E\uDD29")+"\n"+"> "+"перейдите в @BotFather" +escapeMarkdown("📲")+"\n\n\n"+
+        "Настройте всё под себя"+escapeMarkdown(")");
 
-        sendMessage.setReplyMarkup(new InlineKeyboardMarkup(keyboard));
+        
+        if(botOpt.get().isThirdPartyToken()){
+
+            newPhoto.setCaption(text2);
+            List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+             keyboard.add(List.of(button("🔙 Назад", "GO_BACK_FROM_EDIT:"+ botId)));
+
+             sendMessage.setReplyMarkup(new InlineKeyboardMarkup(keyboard));
+        }
+        else{
+            newPhoto.setCaption(text);
+
+            List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+
+            keyboard.add(List.of(button("✏\uFE0F Редактировать имя", "BotF_Name:" + botId)));
+            keyboard.add(List.of(button("\uD83D\uDCC4 Краткое Описание", "BotF_About:" + botId)));
+            keyboard.add(List.of(button("\uD83D\uDCAC Стартовое сообщение", "BotF_Description:" + botId)));
+            keyboard.add(List.of(button("\uD83D\uDCF8 Стартовое фото", "BotF_Description_picture:" + botId)));
+            keyboard.add(List.of(button("\uD83D\uDC64 Аватарка", "BotF_Botpic:" + botId)));
+            keyboard.add(List.of(button("🔙 Назад", "GO_BACK_FROM_EDIT:"+ botId)));
+    
+            sendMessage.setReplyMarkup(new InlineKeyboardMarkup(keyboard));
+        }
+
+       
         sendMessage.setMedia(newPhoto);
 
         try{
+            
             bot.execute(sendMessage);
-
-
+            
         }
         catch (TelegramApiException e){
             e.printStackTrace();

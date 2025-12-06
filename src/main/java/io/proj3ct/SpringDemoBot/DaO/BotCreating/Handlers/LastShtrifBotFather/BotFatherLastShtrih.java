@@ -62,7 +62,7 @@ public class BotFatherLastShtrih implements MessageHandle {
                 Optional<Bot> botikOptional = botService.createBotFreeTrial(user, msg.getText(), true);
                 // Если бот не был создан (токен уже используется)
                 if (botikOptional.isEmpty()) {
-                    message.setText("Ваш токен вже використовується іншим ботом, надішліть інший))");
+                    message.setText("Ваш токен уже используеться другим ботом, пришлите нам другой 🫶");
                     try{
                         Message msgg =  bot.execute(message);
                         messageRegistry.addMessage(msgg.getChatId(), msgg.getMessageId());

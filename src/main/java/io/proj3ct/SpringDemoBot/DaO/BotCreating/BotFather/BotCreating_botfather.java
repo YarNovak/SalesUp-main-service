@@ -34,7 +34,8 @@ public class BotCreating_botfather implements CallbackHandler {
 
             waitBotFather.expect_token(query.getFrom().getId());
         SendMessage sendMessage = new SendMessage();
-        sendMessage.setText("Якшо не даун то знаєш як відіслати токен))");
+        sendMessage.setText("Перейдите в @BotFather, создайте там бота и пришлите его токен.\n\n" +
+                "Вот инструкция как это сделать:\n\n https://timeweb.com/ru/community/articles/token-bota-telegram-kak-sdelat-gde-vzyat-i-kuda-vstavlyat");
         sendMessage.setChatId(query.getMessage().getChatId().toString());
 
         try{
