@@ -136,9 +136,13 @@ public class BotService {
                 }
                 // Створюємо нове повідомлення з дефолтним текстом
                 BotMessage botMessage = new BotMessage();
+                botMessage.setEntitiesJson(defText.getEntitiesJson());
                 botMessage.setBot(bot);
+                
                 botMessage.setMessageKey(defText.getMessageKey());
                 botMessage.setText(defText.getText());
+
+
                 botMessageRepository.save(botMessage);
             }
         } catch (Exception e) {
