@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class WebhookService {
 
     @Value("${app.ngrok}")
-    private final String baseUrl = "https://shopingbot.xyz"; // Replace with your actual base URL
+    private final String baseUrl = "https://bot.shopingbot.xyz"; // Replace with your actual base URL
 
     @Autowired
     private BotRepository botRepository;
